@@ -73,14 +73,16 @@ if($fieldNames){
 }
 
 // Create obj
-$newForm = $modx->newObject('FormItForm');
-$newForm->fromArray(array(
+$newForm = $modx->newObject('FormItForm', array(
     'form' => $formName,
     'date' => time(),
     'values' => $dataArray,
-    'ip' => $_SERVER['REMOTE_ADDR'],
-    'context_key' => $modx->resource->get('context_key')
+    'ip' => $modx->getOption('REMOTE_ADDR', $_SERVER, ''),
+    'context_key' => $modx->resource->get('context_key'),
 ));
-$newForm->save();
-
+if (!$newForm->save()) {
+    $modx->log(modX::LOG_LEVEL_ERROR, '[FormItSaveForm] An error occurred while trying to save the submitted form: ' . print_r($newForm->toArray(), true));
+    return false;
+}
+$hook->setValue('savedForm', $newForm->toArray());
 return true;
