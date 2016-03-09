@@ -385,8 +385,43 @@ class fiHooks {
             $f = '';
             $multiSeparator = $this->modx->getOption('emailMultiSeparator',$this->formit->config,"\n");
             $multiWrapper = $this->modx->getOption('emailMultiWrapper',$this->formit->config,"[[+value]]");
-
-            foreach ($fields as $k => $v) {
+            $formFields = $this->modx->getOption('formFields', $this->formit->config, false);
+            $fieldNames = $this->modx->getOption('fieldNames', $this->formit->config, false);
+            if ($formFields) {
+                $formFields = explode(',', $formFields);
+                foreach($formFields as $k => $v) {
+                    $formFields[$k] = trim($v);
+                }
+            }
+            // Build the data array
+            $dataArray = array();
+            if($formFields){
+                foreach($formFields as $field) {
+                    $dataArray[$field] = (!isset($fields[$field])) ? '' : $fields[$field];
+                }
+            }else{
+                $dataArray = $fields;
+            }
+            //Change the fieldnames
+            if($fieldNames){
+                $newDataArray = array();
+                $fieldLabels = array();
+                $formFieldNames = explode(',', $fieldNames);
+                foreach($formFieldNames as $formFieldName){
+                    list($name, $label) = explode('==', $formFieldName);
+                    $fieldLabels[trim($name)] = trim($label);
+                }
+                foreach ($dataArray as $key => $value) {
+                    if($fieldLabels[$key]){
+                        $newDataArray[$fieldLabels[$key]] = $value;
+                    }else{
+                        $newDataArray[$key] = $value;
+                    }
+                }
+                $dataArray = $newDataArray;
+            }
+            $dataArray = (!empty($dataArray)) ? $dataArray : $fields;
+            foreach ($dataArray as $k => $v) {
                 if ($k == 'nospam') continue;
                 if (is_array($v) && !empty($v['name']) && isset($v['error']) && $v['error'] == UPLOAD_ERR_OK) {
                     $v = $v['name'];
