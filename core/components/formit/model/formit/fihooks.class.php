@@ -349,7 +349,7 @@ class fiHooks {
         /* get from name */
         $emailFrom = $this->modx->getOption('emailFrom', $this->formit->config, '');
         if (empty($emailFrom)) {
-            $emailFrom = !empty($fields['email']) ? $fields['email'] : $this->modx->getOption('emailsender');
+            $emailFrom = $this->modx->getOption('emailsender');
         }
         $emailFrom = $this->_process($emailFrom, $fields);
         $emailFromName = $this->modx->getOption('emailFromName', $this->formit->config, $this->modx->getOption('site_name', null, $emailFrom));
