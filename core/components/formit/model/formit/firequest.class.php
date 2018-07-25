@@ -164,7 +164,7 @@ class fiRequest {
      * @return boolean
      */
     public function hasHook($hook) {
-        return strpos($this->config['hooks'],$hook) !== false;
+        return !!preg_match('#\\b' . preg_quote($hook, '#') . '\\b#i', $this->config['hooks']);
     }
 
     /**
