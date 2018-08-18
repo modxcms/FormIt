@@ -511,6 +511,14 @@
         "readme": "docs/readme.txt",
         "license": "docs/license.txt",
         "changelog": "docs/changelog.txt",
+        "options": {
+            "abort_install_on_vehicle_fail": true
+        },
+        "validator": {
+            "validators": [
+                "requirements.validator.php"
+            ]
+        },
         "resolver": {
             "after": [
                 "resolve.tables.php",
