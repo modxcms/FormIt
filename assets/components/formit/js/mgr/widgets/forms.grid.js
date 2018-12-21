@@ -38,6 +38,11 @@ FormIt.grid.Forms = function(config) {
                 return formDate.format('Y/m/d H:i');
             }
         },{
+            header: _('formit.ip')
+            ,dataIndex: 'ip'
+            ,width: 250
+            ,sortable: true
+        },{
             header: _('formit.hash')
             ,dataIndex: 'hash'
         }]
