@@ -14,6 +14,7 @@ FormIt.grid.Forms = function(config) {
         ,columns: [{
             header: _('id')
             ,dataIndex: 'id'
+            ,sortable: true
         },{
             header: _('formit.form')
             ,dataIndex: 'form'
@@ -33,6 +34,7 @@ FormIt.grid.Forms = function(config) {
             header: _('formit.date')
             ,dataIndex: 'date'
             ,width: 250
+            ,sortable: true
             ,renderer: function(value) {
                 var formDate = Date.parseDate(value, 'U');
                 return formDate.format('Y/m/d H:i');
