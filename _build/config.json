@@ -507,6 +507,16 @@
             "FormItForm"
         ]
     },
+  "dependencies": [
+    {
+      "name": "php",
+      "version": ">=5.4"
+    },
+    {
+      "name": "php",
+      "version": ">=2.6"
+    }
+  ],
     "build": {
         "readme": "docs/readme.txt",
         "license": "docs/license.txt",
