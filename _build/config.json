@@ -513,7 +513,7 @@
       "version": ">=5.4"
     },
     {
-      "name": "php",
+      "name": "modx",
       "version": ">=2.6"
     }
   ],
