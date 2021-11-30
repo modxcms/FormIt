@@ -1,29 +1,43 @@
 <?php
-require_once dirname(dirname(__FILE__)) . '/index.class.php';
+
 /**
- * Loads the home page.
+ * FormIt
  *
- * @package formit
- * @subpackage controllers
+ * Copyright 2019 by Sterc <modx@sterc.nl>
  */
+
+require_once dirname(__DIR__) . '/index.class.php';
+
 class FormItHomeManagerController extends FormItBaseManagerController
 {
-    public function process(array $scriptProperties = array()) {
+    /**
+     * @access public.
+     */
+    public function loadCustomCssJs()
+    {
+        $this->addJavascript($this->modx->formit->config['js_url'] . 'mgr/widgets/home.panel.js');
 
+        $this->addJavascript($this->modx->formit->config['js_url'] . 'mgr/widgets/forms.grid.js');
+        $this->addJavascript($this->modx->formit->config['js_url'] . 'mgr/widgets/encryption.grid.js');
+
+        $this->addLastJavascript($this->modx->formit->config['js_url'] . 'mgr/sections/home.js');
     }
+
+    /**
+     * @access public.
+     * @return String.
+     */
     public function getPageTitle()
     {
         return $this->modx->lexicon('formit');
     }
-    public function loadCustomCssJs()
-    {
-        $this->addJavascript($this->formit->config['jsUrl'].'mgr/widgets/forms.grid.js');
-        $this->addJavascript($this->formit->config['jsUrl'].'mgr/widgets/forms-encryption.grid.js');
-        $this->addJavascript($this->formit->config['jsUrl'].'mgr/widgets/home.panel.js');
-        $this->addLastJavascript($this->formit->config['jsUrl'].'mgr/sections/home.js');
-    }
+
+    /**
+     * @access public.
+     * @return String.
+     */
     public function getTemplateFile()
     {
-        return $this->formit->config['templatesPath'].'home.tpl';
+        return $this->modx->formit->config['templates_path'] . 'home.tpl';
     }
 }
