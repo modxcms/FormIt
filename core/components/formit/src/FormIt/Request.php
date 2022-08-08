@@ -57,18 +57,18 @@ class Request
      */
     function __construct($formit, $config = [])
     {
-        $this->formit = $formit;
-        $this->modx = $formit->modx;
-        $this->config = array_merge([
-            'clearFieldsOnSuccess' => true,
-            'hooks' => '',
-            'placeholderPrefix' => 'fi.',
-            'preHooks' => '',
-            'store' => false,
-            'submitVar' => '',
-            'validate' => '',
-            'validateSeparator' => ',',
-            'renderHooks' => ''
+        $this->formit   = $formit;
+        $this->modx     = $formit->modx;
+        $this->config   = array_merge([
+            'clearFieldsOnSuccess'  => true,
+            'hooks'                 => '',
+            'placeholderPrefix'     => 'fi.',
+            'preHooks'              => '',
+            'store'                 => false,
+            'submitVar'             => '',
+            'validate'              => '',
+            'validateSeparator'     => ',',
+            'renderHooks'           => ''
         ], $config);
     }
 
@@ -149,14 +149,14 @@ class Request
      */
     public function runPreHooks()
     {
-        $fields = array();
+        $fields = [];
 
         $this->formit->loadHooks('pre', $this->config);
 
-        $this->formit->preHooks->loadMultiple($this->config['preHooks'], array(), array(
+        $this->formit->preHooks->loadMultiple($this->config['preHooks'], [], [
             'submitVar' => $this->config['submitVar'],
             'hooks'     => $this->config['preHooks']
-        ));
+        ]);
 
         /* if a prehook sets a field, do so here, but only if POST isnt submitted */
         if (!$this->hasSubmission()) {
@@ -178,8 +178,8 @@ class Request
     {
         $this->formit->loadHooks('render', $this->config);
 
-        $fields = array();
-        $errors = array();
+        $fields = [];
+        $errors = [];
 
         if ($this->dictionary) {
             $fields = $this->dictionary->toArray();
@@ -220,7 +220,7 @@ class Request
     public function loadReCaptcha(array $config = array())
     {
         if (empty($this->reCaptcha)) {
-            if ($this->modx->loadClass('recaptcha.FormItReCaptcha', $this->config['model_path'], true, true)) {
+            if ($this->modx->loadClass('recaptcha.FormItReCaptcha', $this->config['core_path'] . '/model/formit/', true, true)) {
                 $this->reCaptcha = new RecaptchaService($this->formit, $config);
             } else {
                 $this->modx->log(\modX::LOG_LEVEL_ERROR, '[FormIt] '.$this->modx->lexicon('formit.recaptcha_err_load'));
@@ -287,7 +287,7 @@ class Request
      */
     public function loadValidator()
     {
-        if ($this->modx->loadClass('formit.fiValidator',$this->formit->config['model_path'],true,true)) {
+        if ($this->modx->loadClass('formit.fiValidator', $this->formit->config['core_path'] . 'model/', true, true)) {
             $this->validator = new Validator($this->formit, $this->config);
         } else {
             $this->modx->log(\modX::LOG_LEVEL_ERROR,'[FormIt] Could not load Validator class.');
@@ -303,7 +303,7 @@ class Request
      */
     public function loadDictionary()
     {
-        if ($this->modx->loadClass('formit.fiDictionary',$this->formit->config['model_path'],true,true)) {
+        if ($this->modx->loadClass('formit.fiDictionary', $this->formit->config['core_path'] . 'model/', true, true)) {
             $this->dictionary = new Dictionary($this->formit,$this->config);
         } else {
             $this->modx->log(\modX::LOG_LEVEL_ERROR,'[FormIt] Could not load Dictionary class.');
@@ -365,7 +365,7 @@ class Request
 
             /* Also do a glob for removing files that are left behind by not-completed form submissions */
             if (function_exists('glob')) {
-                $tmpPath = $this->formit->config['assets_path'].'tmp/';
+                $tmpPath = $this->formit->config['assets_path'] . 'tmp/';
                 foreach (glob($tmpPath.'*') as $file) {
                     if (file_exists($file) && (time() - filemtime($file) >= $tmpFileLifetime)) {
                         unlink($file);
@@ -397,7 +397,7 @@ class Request
     {
         $success = true;
         /* load posthooks */
-        $this->formit->loadHooks('post',$this->config);
+        $this->formit->loadHooks('post', $this->config);
         $this->formit->postHooks->loadMultiple($this->config['hooks'],$this->dictionary->toArray());
 
         /* process form */
