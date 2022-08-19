@@ -4,6 +4,7 @@ namespace Sterc\FormIt;
 
 use Sterc\FormIt\Service\Recaptcha;
 use Sterc\FormIt\Service\RecaptchaService;
+use Sterc\FormIt\Model\FormItForm;
 
 /**
  * Class Request
@@ -135,7 +136,7 @@ class Request
         if ($this->modx->getOption('storeAttachments', $this->config, false) &&
             ($this->formit->hasHook('FormItSaveForm') || $this->formit->hasHook('saveform'))
         ) {
-            $newForm = $this->modx->newObject('FormItForm');
+            $newForm = $this->modx->newObject(FormItForm::class);
             $newForm->validateStoreAttachment($this->config);
         }
 

@@ -103,7 +103,7 @@ class FormItForm extends \xPDO\Om\xPDOSimpleObject
             );
 
             if (!$setting) {
-                $setting = $this->xpdo->newObject('modSystemSetting');
+                $setting = $this->xpdo->newObject(modSystemSetting::class);
                 $setting->set('key', 'formit.form_encryptkey');
                 $setting->set('namespace', 'formit');
             }
@@ -167,12 +167,7 @@ class FormItForm extends \xPDO\Om\xPDOSimpleObject
                 $old_data = $this->xpdo->fromJSON($this->values);
             }
 
-            $action = $this->xpdo->getObject('modAction', ['namespace' => 'formit']);
-            if ($action) {
-                $actionId = $action->id;
-            }
-
-            $url = $this->xpdo->getOption('manager_url') . '?a=' . $actionId . '&formid=' . $this->id;
+            $url = $this->xpdo->getOption('manager_url') . '?a=home&namespace=formit&formid=' . $this->id;
 
             foreach ($_FILES as $key => $value) {
                 $data_key = [];

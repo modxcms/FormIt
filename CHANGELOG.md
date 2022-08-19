@@ -4,6 +4,8 @@ FormIt 5.0.1
 ====================================
 - Fix Spam hook for MODX3 (PR#268, thanks to byEmma)
 - Fix FormItSaveForm hook (#274)
+- Fix pdoTools/pdoFetch checks, replace getService with modx->services (#271).
+- Fix xpdo class references for MODX3.
 
 FormIt 5.0.0
 ====================================

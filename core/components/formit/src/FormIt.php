@@ -393,7 +393,7 @@ class FormIt
         if (file_exists($file)) {
             $content = file_get_contents($file);
             /** @var \modChunk $chunk */
-            $chunk = $this->modx->newObject('modChunk');
+            $chunk = $this->modx->newObject(modChunk::class);
             $chunk->set('name', $name);
             $chunk->setContent($content);
         }

@@ -3,6 +3,7 @@
 namespace Sterc\FormIt\Processors\Mgr\Forms;
 
 use Sterc\FormIt\Model\FormItForm;
+use MODX\Revolution\modContext;
 use MODX\Revolution\Processors\Model\GetListProcessor;
 use xPDO\Om\xPDOQuery;
 use xPDO\Om\xPDOObject;
@@ -144,7 +145,7 @@ class GetList extends GetListProcessor
     {
         $contexts = ['-'];
 
-        foreach ($this->modx->getCollection('modContext') as $context) {
+        foreach ($this->modx->getCollection(modContext::class) as $context) {
             $contexts[] = $context->get('key');
         }
 
