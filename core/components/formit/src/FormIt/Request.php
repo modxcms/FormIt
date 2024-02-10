@@ -111,24 +111,24 @@ class Request
 
                 /* swap so we always get positive #s */
                 $operators = array('+', '-');
-                $operator = rand(0, 1);
+                $operator = $operators[rand(0, 1)];
 
                 /* Store in session so math fields are not required for math hook */
                 $_SESSION['formitMath'] = array(
                     'op1' => $op1,
                     'op2' => $op2,
-                    'operator' => $operators[$operator]
+                    'operator' => $operator
                 );
             } else {
                 $op1 = $_SESSION['formitMath']['op1'];
                 $op2 = $_SESSION['formitMath']['op2'];
-                $operators[$operator] = $_SESSION['formitMath']['operator'];
+                $operator = $_SESSION['formitMath']['operator'];
             }
 
             $this->modx->setPlaceholders(array(
                 $this->modx->getOption('mathOp1Field', $this->config, 'op1') => $op1,
                 $this->modx->getOption('mathOp2Field', $this->config, 'op2') => $op2,
-                $this->modx->getOption('mathOperatorField', $this->config, 'operator') => $operators[$operator],
+                $this->modx->getOption('mathOperatorField', $this->config, 'operator') => $operator,
             ), $this->config['placeholderPrefix']);
 
         }
