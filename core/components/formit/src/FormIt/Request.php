@@ -293,7 +293,7 @@ class Request
      */
     public function checkForFiles()
     {
-        if (!$this->modx->getOption('allowFiles',$this->config,true)) {
+        if (!$this->modx->getOption('allowFiles',$this->config,false)) {
             $fields = $this->dictionary->toArray();
             foreach ($fields as $key => $value) {
                 if (is_array($value) && !empty($value['tmp_name'])) {

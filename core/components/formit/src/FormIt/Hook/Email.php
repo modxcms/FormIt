@@ -204,7 +204,7 @@ class Email
         $this->modx->mail->set(\modMail::MAIL_SUBJECT, $subject);
 
         /* handle file fields */
-        if ($this->modx->getOption('attachFilesToEmail', $this->config, true)) {
+        if ($this->modx->getOption('attachFilesToEmail', $this->config, false)) {
             $attachmentIndex = 0;
             foreach ($origFields as $k => $v) {
                 if (is_array($v) && !empty($v['tmp_name'])) {
