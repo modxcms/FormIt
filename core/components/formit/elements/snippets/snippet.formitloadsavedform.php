@@ -1,5 +1,5 @@
 <?php
-use FormItForm;
+use Sterc\FormIt\Model\FormItForm;
 
 /**
  * A custom FormIt prehook for fetching saved form data. - Based on FormItSaveForm
