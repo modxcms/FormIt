@@ -53,9 +53,15 @@ class Redirect
      */
     public function process($fields = [])
     {
-        if (empty($this->formit->config['redirectTo'])) {
+        if (empty($this->formit->config['redirectTo']) && empty($this->formit->config['formAction'])) {
             return false;
         }
+
+        /** Allow external handling of the post. */
+        if ($this->formit->config['formAction']) {
+            $this->externalPost($fields);
+        }
+
         $redirectParams = !empty($this->formit->config['redirectParams'])
             ? $this->formit->config['redirectParams']
             : '';
@@ -94,5 +100,22 @@ class Redirect
         $this->hook->setRedirectUrl($url);
 
         return true;
+    }
+
+    protected function externalPost($fields = [])
+    {
+        $url = $this->formit->config['formAction'];
+        $fields_string = http_build_query($fields);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $result = curl_exec($ch);
+        curl_close($ch);    
+
+        return $result;
     }
 }
