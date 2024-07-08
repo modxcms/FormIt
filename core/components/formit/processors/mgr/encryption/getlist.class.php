@@ -72,9 +72,9 @@ class FormItGetListProcessor extends modObjectGetListProcessor
             );
         }
 
+        $criteria->select('MIN(id) AS id, form, context_key');
         $criteria->groupby('form');
         $criteria->groupby('context_key');
-        $criteria->groupby('id');
 
         return $criteria;
     }
@@ -87,7 +87,7 @@ class FormItGetListProcessor extends modObjectGetListProcessor
     public function prepareRow(xPDOObject $object)
     {
         return array_merge(
-            $object->toArray(), [
+            $object->toArray('', false, true), [
             'encrypted'     => $this->modx->getCount(
                 $this->classKey, [
                 'form'          => $object->get('form'),

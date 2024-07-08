@@ -64,6 +64,7 @@ class FormItFormsGetListProcessor extends modObjectGetListProcessor
             'context_key:IN' => $this->getAvailableContexts()
         ]);
 
+        $criteria->select('MIN(id) AS id, form');
         $criteria->groupby('form');
 
         return $criteria;
@@ -76,7 +77,7 @@ class FormItFormsGetListProcessor extends modObjectGetListProcessor
      */
     public function prepareRow(xPDOObject $object)
     {
-        return $object->toArray();
+        return $object->toArray('', false, true);
     }
 
     /**
