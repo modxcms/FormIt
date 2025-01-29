@@ -1,5 +1,9 @@
 Changelog for FormIt.
 
+FormIt 5.1.0
+====================================
+- Convert cleanup to modx3 structure.
+
 FormIt 5.0.1
 ====================================
 - Fix Spam hook for MODX3 (PR#268, thanks to byEmma)
